@@ -3,11 +3,17 @@ import { useEffect, useState } from "react";
 import { Button, Card, CardContent, Divider, Grid, Typography } from "@mui/joy";
 import { Cafe } from "react-ionicons";
 
-import { getUpcoming } from "../api/downtime";
+import { create, getUpcoming } from "../api/downtime";
 
 const CoffeeIcon = () => <Cafe color="white" style={{ marginBottom: '-0.3rem' }} />
 
-const DayCard = ({ dayName, dayNum, monthName, year }) => {
+const DayCard = ({ dayName, dayNum, monthName, monthNum, year, takenOff }) => {
+
+    const takeOff = async () => {
+        await create({ day: dayNum, month: monthNum, year });
+        window.location.reload();
+    }
+
     return (
         <Card sx={{ height: '15rem' }}>
             <CardContent>
@@ -20,13 +26,13 @@ const DayCard = ({ dayName, dayNum, monthName, year }) => {
                     <Typography level="h2">{year}</Typography>
                 </Grid>
                 <Divider sx={{ my: '1rem', border: '1px solid darkgray', borderRadius: '3px' }} />
-                <Button size="lg" startDecorator={<CoffeeIcon />}>Take Off</Button>
+                <Button size="lg" disabled={takenOff} startDecorator={<CoffeeIcon />} onClick={takeOff}>Take Off</Button>
             </CardContent>
         </Card>
     )
 }
 
-const OffDay = () => {
+const Downtime = () => {
     const [upcoming, setUpcoming] = useState([]);
 
     useEffect(() => {
@@ -41,13 +47,13 @@ const OffDay = () => {
             <Typography level="h2" mb={'1rem'}>Upcoming Days</Typography>
             <Grid container spacing={2}>
                 {
-                    upcoming.map(({ iso, dayName, dayNum, monthName }) => {
+                    upcoming.map(({ iso, dayName, dayNum, monthName, monthNum, takenOff }) => {
                         const date = new Date(iso);
                         const year = date.getFullYear();
 
                         return (
                             <Grid item xs={12} key={iso}>
-                                <DayCard dayName={dayName} dayNum={dayNum} monthName={monthName} year={year} />
+                                <DayCard {...{ dayName, dayNum, monthName, monthNum, year, takenOff }} />
                             </Grid>
                         )
                     })
@@ -57,4 +63,4 @@ const OffDay = () => {
     )
 }
 
-export default OffDay;
+export default Downtime;

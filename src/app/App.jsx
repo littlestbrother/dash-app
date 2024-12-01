@@ -4,7 +4,7 @@ import { Container, CssBaseline, CssVarsProvider } from '@mui/joy';
 
 import theme from './theme';
 import { checkEligibility } from '../api/punch';
-import { ClockIn, OffDay } from '../components';
+import { ClockIn, Downtime } from '../components';
 
 const App = () => {
     const [clockInEligible, setCLockInEligible] = useState({});
@@ -27,7 +27,7 @@ const App = () => {
                         <ClockIn />
                     )
                     : (
-                        <OffDay />
+                        <Downtime />
                     )
                 }
             </Container>

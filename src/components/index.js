@@ -1,7 +1,7 @@
 import ClockIn from './ClockIn';
-import OffDay from './OffDay';
+import Downtime from './Downtime';
 
 export {
     ClockIn,
-    OffDay
+    Downtime
 }
