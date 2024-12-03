@@ -21,7 +21,7 @@ const App = () => {
     return (
         <CssVarsProvider defaultMode='dark' theme={theme}>
             <CssBaseline />
-            <Container sx={{ marginTop: '1rem' }} maxWidth="sm">
+            <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '100vh', marginTop: '1rem' }} maxWidth="sm">
                 {clockInEligible
                     ? (
                         <ClockIn />
